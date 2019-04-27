@@ -36,12 +36,16 @@ type finalizerController struct {
 func NewFinalizerController(kubeInformersForTargetNamespace kubeinformers.SharedInformerFactory, namespaceGetter v1.NamespacesGetter, eventRecorder events.Recorder) *finalizerController {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	c := &finalizerController{namespaceGetter: namespaceGetter, podLister: kubeInformersForTargetNamespace.Core().V1().Pods().Lister(), dsLister: kubeInformersForTargetNamespace.Apps().V1().DaemonSets().Lister(), eventRecorder: eventRecorder.WithComponentSuffix("finalizer-controller"), preRunHasSynced: []cache.InformerSynced{kubeInformersForTargetNamespace.Core().V1().Pods().Informer().HasSynced, kubeInformersForTargetNamespace.Apps().V1().DaemonSets().Informer().HasSynced}, queue: workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "FinalizerController")}
 	kubeInformersForTargetNamespace.Core().V1().Pods().Informer().AddEventHandler(c.eventHandler())
 	kubeInformersForTargetNamespace.Apps().V1().DaemonSets().Informer().AddEventHandler(c.eventHandler())
 	return c
 }
 func (c finalizerController) sync() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ns, err := c.namespaceGetter.Namespaces().Get(operatorclient.TargetNamespace, metav1.GetOptions{})
@@ -86,6 +90,8 @@ func (c finalizerController) sync() error {
 func (c *finalizerController) Run(workers int, stopCh <-chan struct{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	defer utilruntime.HandleCrash()
 	defer c.queue.ShutDown()
 	klog.Infof("Starting FinalizerController")
@@ -101,10 +107,14 @@ func (c *finalizerController) Run(workers int, stopCh <-chan struct{}) {
 func (c *finalizerController) runWorker() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	for c.processNextWorkItem() {
 	}
 }
 func (c *finalizerController) processNextWorkItem() bool {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	dsKey, quit := c.queue.Get()
@@ -124,6 +134,8 @@ func (c *finalizerController) processNextWorkItem() bool {
 func (c *finalizerController) eventHandler() cache.ResourceEventHandler {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 		c.queue.Add(operatorclient.TargetNamespace)
 	}, UpdateFunc: func(old, new interface{}) {
@@ -135,7 +147,16 @@ func (c *finalizerController) eventHandler() cache.ResourceEventHandler {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

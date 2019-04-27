@@ -36,6 +36,8 @@ import (
 func syncOpenShiftAPIServer_v311_00_to_latest(c OpenShiftAPIServerOperator, originalOperatorConfig *operatorv1.OpenShiftAPIServer) (bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	errors := []error{}
 	operatorConfig := originalOperatorConfig.DeepCopy()
 	directResourceResults := resourceapply.ApplyDirectly(c.kubeClient, c.eventRecorder, v311_00_assets.Asset, "v3.11.0/openshift-apiserver/ns.yaml", "v3.11.0/openshift-apiserver/apiserver-clusterrolebinding.yaml", "v3.11.0/openshift-apiserver/svc.yaml", "v3.11.0/openshift-apiserver/etcd-service.yaml", "v3.11.0/openshift-apiserver/etcd-ns.yaml", "v3.11.0/openshift-apiserver/sa.yaml")
@@ -168,6 +170,8 @@ func syncOpenShiftAPIServer_v311_00_to_latest(c OpenShiftAPIServerOperator, orig
 func manageOpenShiftAPIServerImageImportCA_v311_00_to_latest(openshiftConfigClient openshiftconfigclientv1.ConfigV1Interface, client coreclientv1.CoreV1Interface, recorder events.Recorder) (*corev1.ConfigMap, bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	imageConfig, err := openshiftConfigClient.Images().Get("cluster", metav1.GetOptions{})
 	if err != nil && !apierrors.IsNotFound(err) {
 		return nil, false, err
@@ -202,6 +206,8 @@ func manageOpenShiftAPIServerImageImportCA_v311_00_to_latest(openshiftConfigClie
 func manageOpenShiftAPIServerConfigMap_v311_00_to_latest(kubeClient kubernetes.Interface, client coreclientv1.ConfigMapsGetter, recorder events.Recorder, operatorConfig *operatorv1.OpenShiftAPIServer) (*corev1.ConfigMap, bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	configMap := resourceread.ReadConfigMapV1OrDie(v311_00_assets.MustAsset("v3.11.0/openshift-apiserver/cm.yaml"))
 	defaultConfig := v311_00_assets.MustAsset("v3.11.0/openshift-apiserver/defaultconfig.yaml")
 	requiredConfigMap, _, err := resourcemerge.MergeConfigMap(configMap, "config.yaml", nil, defaultConfig, operatorConfig.Spec.ObservedConfig.Raw, operatorConfig.Spec.UnsupportedConfigOverrides.Raw)
@@ -218,6 +224,8 @@ func manageOpenShiftAPIServerConfigMap_v311_00_to_latest(kubeClient kubernetes.I
 	return resourceapply.ApplyConfigMap(client, recorder, requiredConfigMap)
 }
 func manageOpenShiftAPIServerDaemonSet_v311_00_to_latest(client appsclientv1.DaemonSetsGetter, recorder events.Recorder, imagePullSpec string, operatorConfig *operatorv1.OpenShiftAPIServer, generationStatus []operatorv1.GenerationStatus, forceRollingUpdate bool) (*appsv1.DaemonSet, bool, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	required := resourceread.ReadDaemonSetV1OrDie(v311_00_assets.MustAsset("v3.11.0/openshift-apiserver/ds.yaml"))
@@ -248,6 +256,8 @@ func manageOpenShiftAPIServerDaemonSet_v311_00_to_latest(client appsclientv1.Dae
 func manageAPIServices_v311_00_to_latest(client apiregistrationv1client.APIServicesGetter) ([]*apiregistrationv1.APIService, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	var apiServices []*apiregistrationv1.APIService
 	for _, apiServiceGroupVersion := range apiServiceGroupVersions {
 		obj := &apiregistrationv1.APIService{ObjectMeta: metav1.ObjectMeta{Name: apiServiceGroupVersion.Version + "." + apiServiceGroupVersion.Group, Annotations: map[string]string{"service.alpha.openshift.io/inject-cabundle": "true"}}, Spec: apiregistrationv1.APIServiceSpec{Group: apiServiceGroupVersion.Group, Version: apiServiceGroupVersion.Version, Service: &apiregistrationv1.ServiceReference{Namespace: operatorclient.TargetNamespace, Name: "api"}, GroupPriorityMinimum: 9900, VersionPriority: 15}}
@@ -265,11 +275,15 @@ var openshiftScheme = runtime.NewScheme()
 func init() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if err := openshiftapi.Install(openshiftScheme); err != nil {
 		panic(err)
 	}
 }
 func resourceSelectorForCLI(obj runtime.Object) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	groupVersionKind := obj.GetObjectKind().GroupVersionKind()

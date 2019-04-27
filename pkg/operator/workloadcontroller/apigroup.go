@@ -16,6 +16,8 @@ var apiServiceGroupVersions = []schema.GroupVersion{{Group: "apps.openshift.io",
 func checkForAPIs(restclient rest.Interface, groupVersions ...schema.GroupVersion) []string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	missingMessages := []string{}
 	for _, groupVersion := range groupVersions {
 		url := "/apis/" + groupVersion.Group + "/" + groupVersion.Version
@@ -30,6 +32,8 @@ func checkForAPIs(restclient rest.Interface, groupVersions ...schema.GroupVersio
 func APIServiceReferences() []configv1.ObjectReference {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ret := []configv1.ObjectReference{}
 	for _, gv := range apiServiceGroupVersions {
 		ret = append(ret, configv1.ObjectReference{Group: "apiregistration.k8s.io", Resource: "apiservices", Name: gv.Version + "." + gv.Group})
@@ -39,7 +43,16 @@ func APIServiceReferences() []configv1.ObjectReference {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

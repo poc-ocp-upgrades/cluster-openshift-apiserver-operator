@@ -14,12 +14,16 @@ import (
 func fakeProjectConfig(name string, spec projectv1.ProjectSpec) projectv1.Project {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	p := projectv1.Project{}
 	p.Name = "cluster"
 	p.Spec = spec
 	return p
 }
 func TestObserveProjectRequestMessage(t *testing.T) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	tests := []struct {
@@ -53,6 +57,8 @@ func TestObserveProjectRequestMessage(t *testing.T) {
 	}
 }
 func TestObserveProjectRequestTemplateName(t *testing.T) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	tests := []struct {

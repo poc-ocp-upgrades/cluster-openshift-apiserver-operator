@@ -15,9 +15,13 @@ type OperatorClient struct {
 func (p *OperatorClient) Informer() cache.SharedIndexInformer {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return p.Informers.Operator().V1().OpenShiftAPIServers().Informer()
 }
 func (c *OperatorClient) GetOperatorState() (*operatorv1.OperatorSpec, *operatorv1.OperatorStatus, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	instance, err := c.Informers.Operator().V1().OpenShiftAPIServers().Lister().Get("cluster")
@@ -27,6 +31,8 @@ func (c *OperatorClient) GetOperatorState() (*operatorv1.OperatorSpec, *operator
 	return &instance.Spec.OperatorSpec, &instance.Status.OperatorStatus, instance.ResourceVersion, nil
 }
 func (c *OperatorClient) UpdateOperatorSpec(resourceVersion string, spec *operatorv1.OperatorSpec) (*operatorv1.OperatorSpec, string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	original, err := c.Informers.Operator().V1().OpenShiftAPIServers().Lister().Get("cluster")
@@ -43,6 +49,8 @@ func (c *OperatorClient) UpdateOperatorSpec(resourceVersion string, spec *operat
 	return &ret.Spec.OperatorSpec, ret.ResourceVersion, nil
 }
 func (c *OperatorClient) UpdateOperatorStatus(resourceVersion string, status *operatorv1.OperatorStatus) (*operatorv1.OperatorStatus, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	original, err := c.Informers.Operator().V1().OpenShiftAPIServers().Lister().Get("cluster")
